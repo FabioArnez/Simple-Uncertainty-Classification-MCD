@@ -25,7 +25,7 @@ def TrainModel(model, device, train_loader, lossFunction, optimizer):
     return sum_traning_batches_avg_loss
 
 
-def ValidatelModel(model, device, valid_loader, lossFunction):
+def ValidateModel(model, device, valid_loader, lossFunction):
     sum_valid_batches_avg_loss = 0.0
     # Enable train mode
     model.eval()
@@ -69,7 +69,7 @@ def TrainValidNeuralNet(model, train_loader, valid_loader, num_epochs):
         ######################    
         # validate the model #
         ######################
-        sum_valid_batches_avg_loss = ValidatelModel(model, device, valid_loader, lossFunction)
+        sum_valid_batches_avg_loss = ValidateModel(model, device, valid_loader, lossFunction)
 
         # Get epoch average loss
         epoch_avg_train_loss = sum_traning_batches_avg_loss / len(train_loader)
