@@ -28,9 +28,42 @@ class FullyConnectedNet(nn.Module):
         return output
 
 
+class FullyConnectedNetDropOut(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(784, 512)
+        self.fc2 = nn.Linear(512, 256)
+        self.fc3 = nn.Linear(256, 128)
+        self.fc4 = nn.Linear(128, 64)
+        self.fc5 = nn.Linear(64, 10)
+        # Dropout module with 0.2 drop probability
+        self.dropout_02 = nn.Dropout(p=0.2)
+        # Dropout module with 0.2 drop probability
+        self.dropout_04 = nn.Dropout(p=0.4)
+
+    def forward(self, x):
+        # # flatten image input
+        x = x.view(-1, 28 * 28)
+        # fc1 with dropout_02
+        x = F.relu(self.fc1(x))
+        x = self.dropout_02(x)
+        # fc2 with dropout_04
+        x = F.relu(self.fc2(x))
+        x = self.dropout_04(x)
+        # fc3 with dropout_02
+        x = F.relu(self.fc3(x))
+        x = self.dropout_02(x)
+        # fc4
+        x = F.relu(self.fc4(x))
+        x = self.fc5(x)
+        # apply softmax to the last layer
+        output = F.log_softmax(x, dim=1)
+        return output
+
+
 class ConvNet(nn.Module):
     def __init__(self):
-        super(Net, self).__init__()
+        super().__init__()
         self.conv1 = nn.Conv2d(1, 32, 3, 1)
         self.conv2 = nn.Conv2d(32, 64, 3, 1)
         self.dropout_025 = nn.Dropout2d(0.25)
